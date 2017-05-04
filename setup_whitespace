@@ -1,0 +1,17 @@
+#!/bin/bash
+
+Smudge=$(git config --global filter.tabspace.smudge)
+
+echo $Smudge;
+
+if [ "$Smudge" == '' ]; then
+	git config --global filter.tabspace.smudge 'unexpand -t 4'
+	git config --global filter.tabspace.clean 'expand -t 4'
+
+	git config --global filter.tabspace2.smudge 'unexpand -t 2'
+	git config --global filter.tabspace2.clean 'expand -t 2'
+
+	git checkout HEAD -- **
+else
+	echo 'not adding git settings'
+fi
