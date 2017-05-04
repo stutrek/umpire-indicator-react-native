@@ -1,0 +1,3 @@
+rootProject.name = 'umpireIndicator'
+
+include ':app'
