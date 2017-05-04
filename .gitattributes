@@ -1,1 +1,8 @@
 *.pbxproj -text
+*.js filter=tabspace 
+*.html filter=tabspace 
+*.css filter=tabspace 
+*.json filter=tabspace2 
+*.less filter=tabspace2 
+*.jshintrc filter=tabspace 
+*.hbs filter=tabspace

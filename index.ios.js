@@ -1,8 +1,6 @@
-import React from "react-native";
-import Root from "./src/containers/root";
+import React from 'react-native';
+import Root from './src/containers/root';
 
-const {
-  AppRegistry
-} = React;
+const {AppRegistry} = React;
 
-AppRegistry.registerComponent("umpireIndicator", () => Root);
+AppRegistry.registerComponent('umpireIndicator', () => Root);
