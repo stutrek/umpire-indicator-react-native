@@ -1,23 +1,32 @@
 /* @flow */
 /*global setTimeout*/
 
-export const REQUEST_DATA = 'REQUEST_DATA';
-export const RECEIVE_DATA = 'RECEIVE_DATA';
+export const INCREMENT = 'INCREMENT';
+export const NEXT_BATTER = 'NEXT_BATTER';
+export const NEW_GAME = 'NEW_GAME';
+export const UNDO = 'UNDO';
 
-export const requestData = (): Object => {
-    return {type: REQUEST_DATA};
-};
-
-export const receiveData = (data: Object): Object => {
-    return {type: RECEIVE_DATA, data};
-};
-
-export const fetchData = (): Function => {
-    return (dispatch) => {
-        dispatch(requestData());
-        return setTimeout(() => {
-            const data = {message: 'Hello'};
-            dispatch(receiveData(data));
-        }, 300);
+export function increment (property) {
+    return {
+        type: INCREMENT,
+        payload: property
     };
-};
+}
+
+export function nextBatter () {
+    return {
+        type: NEXT_BATTER
+    };
+}
+
+export function newGame () {
+    return {
+        type: NEW_GAME
+    };
+}
+
+export function undo () {
+    return {
+        type: UNDO
+    };
+}

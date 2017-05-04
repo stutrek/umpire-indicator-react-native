@@ -10,8 +10,8 @@ const store = configureStore();
 class Root extends React.Component {
     render() {
         return (<Provider store={store}>
-        	<Scene />
-    	</Provider>);
+            <Layout />
+        </Provider>);
     }
 }
 
