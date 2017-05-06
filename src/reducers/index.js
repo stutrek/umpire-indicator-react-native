@@ -66,6 +66,7 @@ const data = (state=initialState, action) => {
             gameData = correctIncrement(gameData);
             if (action.payload === 'inning') {
                 gameData = resetBatter(gameData);
+                gameData = gameData.set('outs', 0);
             }
             state = state.set('gameData', gameData);
             break;
@@ -75,7 +76,7 @@ const data = (state=initialState, action) => {
             break;
 
         case NEW_GAME:
-            state = state.set('gameData', initialState);
+            state = state.set('gameData', initialState.gameData);
             break;
 
         case UNDO:
