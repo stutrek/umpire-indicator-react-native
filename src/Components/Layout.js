@@ -7,7 +7,11 @@ import actionWrapper from 'redux-action-wrapper';
 
 import * as actions from '../actions';
 
-import { Text, View, TouchableHighlight } from 'react-native';
+import DataItem from './DataItem';
+import Label from './Label';
+import Value from './Value';
+
+import { View, TouchableHighlight, Dimensions } from 'react-native';
 
 const layoutStyle = {
     marginTop: 20,
@@ -18,13 +22,14 @@ const layoutStyle = {
     flexWrap:'wrap',
 };
 
-const itemStyle = {
+const getItemStyle = (height) => { return {
     width: '50%',
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: 'gray',
-    backgroundColor: 'black'
-};
+    backgroundColor: 'black',
+    height
+};};
 
 const multiItemStyle = {
     // flexDirection: 'column',
@@ -39,40 +44,9 @@ const multiItemChildStyle = {
     justifyContent: 'center',
     borderWidth: 1,
     borderColor: 'gray',
-    backgroundColor: 'black'
+    backgroundColor: 'black',
+    height: 105
 };
-
-const valueStyle = {
-    fontSize: 64,
-    textAlign: 'center',
-    fontVariant: ['lining-nums'],
-    color: 'white'
-};
-
-const labelStyle = {
-    fontSize: 18,
-    textAlign: 'center',
-    fontVariant: ['lining-nums'],
-    color: 'white'
-};
-
-class Value extends React.Component {
-    render () {
-        return (<Text style={valueStyle}>
-            {this.props.children}
-        </Text>);
-    }
-}
-
-class Label extends React.Component {
-    render () {
-        return (<Text style={labelStyle}>
-            {this.props.children}
-        </Text>);
-    }
-}
-
-
 
 class Inning extends React.Component {
     handlePress = () => {
@@ -89,7 +63,7 @@ class Inning extends React.Component {
         } else {
             topOrBottom = 'bot';
         }
-        return (<TouchableHighlight onPress={this.handlePress} style={itemStyle}>
+        return (<TouchableHighlight onPress={this.handlePress} style={this.props.style}>
             <View>
                 <Label>Inning</Label>
                 <Value>{topOrBottom} {displayNumber}</Value>
@@ -99,20 +73,6 @@ class Inning extends React.Component {
 
 }
 
-class DataItem extends React.Component {
-    handlePress = () => {
-        this.props.increment(this.props.property);
-    }
-
-    render () {
-        return (<TouchableHighlight onPress={this.handlePress} style={itemStyle}>
-            <View>
-                <Label>{this.props.property}</Label>
-                <Value>{this.props.gameData[this.props.property]}</Value>
-            </View>
-        </TouchableHighlight>);
-    }
-}
 
 class MultiItemContainer extends React.Component {
     render () {
@@ -124,21 +84,59 @@ class MultiItemContainer extends React.Component {
 
 class NoValue extends React.Component {
     render () {
-        return (<TouchableHighlight onPress={this.props.onPress} style={itemStyle}>
+        return (<TouchableHighlight onPress={this.props.onPress} style={getItemStyle()}>
             <View><Label>{this.props.children}</Label></View>
         </TouchableHighlight>);
     }
 }
 
 class Layout extends React.Component {
+
     render() {
+
+        var { height } = Dimensions.get('window');
+
+        var availableHeight = height - multiItemStyle.height - 20;
+        var itemHeight = availableHeight / 3;
+
+        let itemStyle = getItemStyle(itemHeight);
+
         return (<View style={layoutStyle}>
-            <DataItem gameData={this.props.gameData} increment={this.props.actions.increment} property="balls" />
-            <DataItem gameData={this.props.gameData} increment={this.props.actions.increment} property="strikes" />
-            <Inning gameData={this.props.gameData} increment={this.props.actions.increment} />
-            <DataItem gameData={this.props.gameData} increment={this.props.actions.increment} property="outs" />
-            <DataItem gameData={this.props.gameData} increment={this.props.actions.increment} property="away" />
-            <DataItem gameData={this.props.gameData} increment={this.props.actions.increment} property="home" />
+            <DataItem
+                gameData={this.props.gameData}
+                increment={this.props.actions.increment}
+                property="balls"
+                style={itemStyle}
+            />
+            <DataItem
+                gameData={this.props.gameData}
+                increment={this.props.actions.increment}
+                property="strikes"
+                style={itemStyle}
+            />
+            <Inning
+                gameData={this.props.gameData}
+                increment={this.props.actions.increment}
+                style={itemStyle}
+            />
+            <DataItem
+                gameData={this.props.gameData}
+                increment={this.props.actions.increment}
+                property="outs"
+                style={itemStyle}
+            />
+            <DataItem
+                gameData={this.props.gameData}
+                increment={this.props.actions.increment}
+                property="away"
+                style={itemStyle}
+            />
+            <DataItem
+                gameData={this.props.gameData}
+                increment={this.props.actions.increment}
+                property="home"
+                style={itemStyle}
+            />
             <MultiItemContainer>
                 <TouchableHighlight onPress={this.props.actions.newGame} style={multiItemChildStyle}>
                     <View><Label>New Game</Label></View>
